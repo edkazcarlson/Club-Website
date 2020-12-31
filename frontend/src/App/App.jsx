@@ -9,32 +9,38 @@ import { HomePage } from '../Pages/HomePage';
 import { LoginPage } from '../Pages/LoginPage';
 import { RegisterPage } from '../RegisterPage';
 import {NavBar} from '../_components/NavBar'
+import { PersonalInfoPage } from '../Pages/PersonalInfoPage';
+
 
 function App() {
-    const alert = useSelector(state => state.alert);
-    const dispatch = useDispatch();
+    // const alert = useSelector(state => state.alert);
+    // const dispatch = useDispatch();
 
-    useEffect(() => {
-        history.listen((location, action) => {
-            // clear alert on location change
-            dispatch(alertActions.clear());
-        });
-    }, []);
+    // useEffect(() => {
+    //     history.listen((location, action) => {
+    //         // clear alert on location change
+    //         dispatch(alertActions.clear());
+    //     });
+    // }, []);
 
 
     return (
         <div >
-            {alert.message &&
+            {/* {alert.message &&
                 <div className={`alert ${alert.type}`}>{alert.message}</div>
-            }
+            } */}
             <Router history={history}>
                 <PrivateRoute exact path="/" >
                     <NavBar/>
                     <HomePage/>
                 </PrivateRoute>
+                <PrivateRoute exact path="/settings" >
+                    <NavBar/>
+                    <PersonalInfoPage/>
+                </PrivateRoute>
                 <Route path="/login" component={LoginPage} />
                 <Route path="/register" component={RegisterPage} />
-                <Redirect from="*" to="/" />
+                {/* <Redirect from="*" to="/" /> */}
             </Router>
         </div>
     );
