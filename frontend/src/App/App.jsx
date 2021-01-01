@@ -7,21 +7,21 @@ import { alertActions } from '../_actions';
 import { PrivateRoute } from '../_components';
 import { HomePage } from '../Pages/HomePage';
 import { LoginPage } from '../Pages/LoginPage';
-import { RegisterPage } from '../RegisterPage';
+import { RegisterPage } from '../Pages/RegisterPage';
 import {NavBar} from '../_components/NavBar'
 import { PersonalInfoPage } from '../Pages/PersonalInfoPage';
 
 
 function App() {
-    // const alert = useSelector(state => state.alert);
-    // const dispatch = useDispatch();
+    const alert = useSelector(state => state.alert);
+    const dispatch = useDispatch();
 
-    // useEffect(() => {
-    //     history.listen((location, action) => {
-    //         // clear alert on location change
-    //         dispatch(alertActions.clear());
-    //     });
-    // }, []);
+    useEffect(() => {
+        history.listen((location, action) => {
+            // clear alert on location change
+            dispatch(alertActions.clear());
+        });
+    }, []);
 
 
     return (
