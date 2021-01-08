@@ -151,3 +151,16 @@ def update_user(
         )
     user = crud.user.update(db, db_obj=user, obj_in=user_in)
     return user
+
+@router.get("/{user_id}/pfp")
+def userProfilePicture(
+    db: Session = Depends(deps.get_db),
+    user_id: int):
+    """
+    Sends the profile picture to the user
+    """
+    user = crud.user.get(db, id=user_id)
+    imagePath = user.pfp_Path
+    print(os.path.join('userPFP',imagePath))
+    return FileResponse(os.path.join('userPFP',imagePath), media_type='application/octet-stream',filename=imagePath)
+
