@@ -1,5 +1,6 @@
 import config from 'config';
 import { authHeader } from '../_helpers';
+import axios from 'axios'
 
 export const userService = {
     login,
@@ -12,19 +13,26 @@ export const userService = {
 };
 
 function login(username, password) {
-    const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-    };
+    // const requestOptions = {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify({ username: username,
+    //          password: password })
+    // };
+    const params = new URLSearchParams();
+    params.append("username", username);
+    params.append("password", password);
 
-    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+    return axios.post(`${config.apiUrl}/login/access-token`, params)
         .then(handleResponse)
-        .then(user => {
+        .then(response => {
+            console.log(`response:`)
+            console.log(response)
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(user));
+            const token = response.data.access_token;
+            localStorage.setItem('token', token);
 
-            return user;
+            return response;
         });
 }
 
@@ -59,7 +67,7 @@ function register(user) {
     };
     console.log(user)
     console.log(`${config.apiUrl}`)
-    return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
 }
 
 function update(user) {
@@ -83,19 +91,31 @@ function _delete(id) {
 }
 
 function handleResponse(response) {
-    return response.text().then(text => {
-        const data = text && JSON.parse(text);
-        if (!response.ok) {
-            if (response.status === 401) {
-                // auto logout if 401 response returned from api
-                logout();
-                location.reload(true);
-            }
+    // console.log(response)
+    // return response.text().then(text => {
+    //     const data = text && JSON.parse(text);
+    //     if (!response.ok) {
+    //         if (response.status === 401) {
+    //             // auto logout if 401 response returned from api
+    //             logout();
+    //             location.reload(true);
+    //         }
+    //         const error = (data && data.message) || response.statusText;
+    //         console.log(`Error in user.service: ${error}`)
+    //         return Promise.reject(error);
+    //     }
 
-            const error = (data && data.message) || response.statusText;
-            return Promise.reject(error);
-        }
-
-        return data;
-    });
+    //     return data;
+    // });
+    console.log('user.service1')
+    console.log(response)
+    if (response.status === 400) {
+            console.log('user.service')
+            console.log(resposne)
+            return Promise.reject(response.data.detail);
+    } else if (response.status === 200) {
+        return response
+    } else {
+        return Promise.reject(response);
+    }
 }

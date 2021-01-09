@@ -22,6 +22,7 @@ function login(username, password, from) {
                     history.push(from);
                 },
                 error => {
+                    console.log(error)
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
                 }
