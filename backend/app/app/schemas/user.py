@@ -16,6 +16,7 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     email: EmailStr
     password: str
+    pfp_Path: str
 
 
 # Properties to receive via API on update

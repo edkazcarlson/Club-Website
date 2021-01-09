@@ -9,6 +9,8 @@ from app import crud, models, schemas
 from app.api import deps
 from app.core.config import settings
 from app.utils import send_new_account_email
+import os 
+from fastapi.responses import FileResponse
 
 router = APIRouter()
 
@@ -154,13 +156,15 @@ def update_user(
 
 @router.get("/{user_id}/pfp")
 def userProfilePicture(
+    *, 
     db: Session = Depends(deps.get_db),
     user_id: int):
     """
     Sends the profile picture to the user
     """
     user = crud.user.get(db, id=user_id)
+    print(f"user: {user}")
     imagePath = user.pfp_Path
-    print(os.path.join('userPFP',imagePath))
+    print(f'os.path.join("userPFP",imagePath): {os.path.join("userPFP",imagePath)}')
     return FileResponse(os.path.join('userPFP',imagePath), media_type='application/octet-stream',filename=imagePath)
 
