@@ -9,14 +9,15 @@ class UserBase(BaseModel):
     is_active: Optional[bool] = True
     is_superuser: bool = False
     full_name: Optional[str] = None
-    pfp_Path: str
+    pfp_Path: Optional[str]
+    
 
 
 # Properties to receive via API on creation
 class UserCreate(UserBase):
     email: EmailStr
+    full_name: str
     password: str
-    pfp_Path: str
 
 
 # Properties to receive via API on update

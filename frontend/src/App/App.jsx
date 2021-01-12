@@ -15,13 +15,16 @@ import { PersonalInfoPage } from '../Pages/PersonalInfoPage';
 function App() {
     const alert = useSelector(state => state.alert);
     const dispatch = useDispatch();
-
+    const userToken = localStorage.getItem('token')
+    console.log(userToken)
     useEffect(() => {
         history.listen((location, action) => {
             // clear alert on location change
             dispatch(alertActions.clear());
         });
     }, []);
+
+    const nav = <NavBar userToken = {userToken}/>
 
 
     return (
@@ -30,12 +33,12 @@ function App() {
                 <div className={`alert ${alert.type}`}>{alert.message}</div>
             } */}
             <Router history={history}>
-                <PrivateRoute exact path="/" >
-                    <NavBar/>
+                <Route exact path="/" >
+                    {nav}
                     <HomePage/>
-                </PrivateRoute>
+                </Route>
                 <PrivateRoute exact path="/settings" >
-                    <NavBar/>
+                    {nav}
                     <PersonalInfoPage/>
                 </PrivateRoute>
                 <Route path="/login" component={LoginPage} />

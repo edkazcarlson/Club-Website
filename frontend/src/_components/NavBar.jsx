@@ -18,6 +18,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import { Link } from 'react-router-dom';
+import SideBarClub from './SideBarClub'
+import ClubFinder from './ClubFinder'
 
 const drawerWidth = 240;
 
@@ -85,11 +87,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NavBar() {
+function NavBar(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
+  const userToken = props.userToken;
+  console.log(userToken)
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -97,6 +100,9 @@ function NavBar() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const ListContent = [<ClubFinder iconSize = {theme.spacing(iconWidth)}/>];
+  
 
   return (
     <div className={classes.root}>
@@ -144,13 +150,7 @@ function NavBar() {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text} style = {{paddingLeft: '0px'}}>
-              <img src="https://th.bing.com/th/id/OIP.e5q3Vs_qDs-pmOL_r6TIqwHaHm?pid=Api&rs=1" alt="Girl in a jacket" 
-              width={theme.spacing(iconWidth)} height={theme.spacing(iconWidth)} style = {{borderRadius: '50%'}}/>
-              <ListItemText primary={text}/>
-            </ListItem>
-          ))}
+          {ListContent}
         </List>
       </Drawer>
       </div>
