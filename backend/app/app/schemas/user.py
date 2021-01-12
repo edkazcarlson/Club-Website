@@ -10,7 +10,7 @@ class UserBase(BaseModel):
     is_superuser: bool = False
     full_name: Optional[str] = None
     pfp_Path: Optional[str]
-    
+    hashed_password: str    
 
 
 # Properties to receive via API on creation

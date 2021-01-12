@@ -27,6 +27,8 @@ class CRUDClub(CRUDBase[Club, ClubCreate, ClubUpdate]):
         else:
             update_data = obj_in.dict(exclude_unset=True)
         return super().update(db, db_obj=db_obj, obj_in=update_data)
+    
+    def addUser(self, db: Session, *, )
 
 
 
