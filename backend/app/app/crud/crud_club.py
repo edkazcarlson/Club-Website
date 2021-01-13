@@ -7,6 +7,9 @@ from app.crud.base import CRUDBase
 from app.models.club import Club
 from app.schemas.club import ClubCreate, ClubUpdate
 
+from app.crud.crud_clubRole import clubRole
+from app.schemas.clubRole import ClubRoleCreate
+
 
 class CRUDClub(CRUDBase[Club, ClubCreate, ClubUpdate]):
     
@@ -17,6 +20,10 @@ class CRUDClub(CRUDBase[Club, ClubCreate, ClubUpdate]):
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
+        print(f"db_obj: {db_obj}")
+        print(f"db_obj.id: {db_obj.id}")
+        defaultRoleSchema = ClubRoleCreate(title = 'Deafult', clubID = db_obj.id)
+        defaultRole = clubRole.create(db = db, obj_in = defaultRoleSchema)
         return db_obj
 
     def update(
@@ -28,8 +35,8 @@ class CRUDClub(CRUDBase[Club, ClubCreate, ClubUpdate]):
             update_data = obj_in.dict(exclude_unset=True)
         return super().update(db, db_obj=db_obj, obj_in=update_data)
     
-    def addUser(self, db: Session, *, )
+    # def addUser(self, db: Session, *, )
 
 
 
-Club = CRUDClub(Club)
+club = CRUDClub(Club)
