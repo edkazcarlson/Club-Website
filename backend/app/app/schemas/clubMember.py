@@ -5,14 +5,16 @@ from pydantic import BaseModel
 
 # Shared properties
 class ClubMemberBase(BaseModel):
+    user: int
     club: int
-    role: int
-    joined: datetime.datetime
+    role: Optional[int]
+    joined: Optional[datetime.datetime]
 
 
 # Properties to receive via API on creation
 class ClubMemberCreate(ClubMemberBase):
-    pass
+    user: int
+    club: int
 
 # Properties to receive via API on update
 class ClubMemberUpdate(ClubMemberBase):

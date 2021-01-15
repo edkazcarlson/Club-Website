@@ -11,7 +11,7 @@ from app.core.config import settings
 from app.utils import send_new_account_email
 import os 
 from fastapi.responses import FileResponse
-
+from app.schemas.clubMember import ClubMemberCreate
 router = APIRouter()
 
 
@@ -154,7 +154,7 @@ def update_user(
     user = crud.user.update(db, db_obj=user, obj_in=user_in)
     return user
 
-@router.get("/{user_id}/pfp")
+@router.get("/pfp/{user_id}")
 def userProfilePicture(
     *, 
     db: Session = Depends(deps.get_db),
@@ -168,3 +168,19 @@ def userProfilePicture(
     print(f'os.path.join("userPFP",imagePath): {os.path.join("userPFP",imagePath)}')
     return FileResponse(os.path.join('userPFP',imagePath), media_type='application/octet-stream',filename=imagePath)
 
+@router.post("/joinClub-{clubID}")
+def userJoinClub(
+    *,
+    db: Session = Depends(deps.get_db),
+    currentUser: models.User = Depends(deps.get_current_active_user),
+    clubID: int):
+    """
+    Join a club
+    """
+    print(currentUser.email)
+    club = crud.club.get(db, id = clubID)
+    if club != None:
+        obj_in = ClubMemberCreate(club = clubID, user = currentUser.id)
+        crud.clubMember.create(db, obj_in = obj_in)
+    else: 
+        return "Club not found"

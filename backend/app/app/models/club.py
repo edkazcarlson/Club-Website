@@ -5,6 +5,7 @@ from sqlalchemy.orm import relationship
 
 from app.db.base_class import Base
 
+
 if TYPE_CHECKING:
     pass
 
@@ -35,7 +36,8 @@ class ClubRole(Base):
 
 class ClubMember(Base):
     __tablename__ = 'clubMember'
-    id = Column(Integer,  ForeignKey('user.id'), primary_key = True, index = True)
+    id = Column(Integer, primary_key = True, index = True)
+    user = Column(Integer,  ForeignKey('user.id'))
     club = Column(Integer, ForeignKey('club.id'))
     role = Column(Integer, ForeignKey('clubRole.id'))
     joined = Column(Date)

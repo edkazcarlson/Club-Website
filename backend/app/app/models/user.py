@@ -3,11 +3,9 @@ from sqlalchemy import Table, Boolean, Column, Integer, String, Float, ForeignKe
 from sqlalchemy.orm import relationship
 from app.db.base_class import Base
 from typing import TYPE_CHECKING
-from sqlalchemy.ext import declarative
 
 if TYPE_CHECKING:
     pass
-declBase = declarative.declarative_base()
 
 class User(Base):
     __tablename__ = 'user'

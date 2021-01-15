@@ -1,8 +1,8 @@
-"""another attmpt to do demo
+"""restart
 
-Revision ID: 8ef4f8eed941
-Revises: e34db1db9256
-Create Date: 2021-01-12 19:41:56.494520
+Revision ID: 5cc93d7d288c
+Revises: 
+Create Date: 2021-01-15 20:53:50.492132
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '8ef4f8eed941'
-down_revision = 'e34db1db9256'
+revision = '5cc93d7d288c'
+down_revision = None
 branch_labels = None
 depends_on = None
 

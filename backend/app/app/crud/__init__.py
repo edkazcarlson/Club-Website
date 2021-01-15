@@ -1,6 +1,7 @@
 from .crud_user import user
 from .crud_club import club
 from .crud_clubRole import clubRole
+from .crud_clubMember import clubMember
 
 # For a new basic set of CRUD operations you could just do
 

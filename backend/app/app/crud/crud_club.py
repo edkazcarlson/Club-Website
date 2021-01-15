@@ -4,12 +4,15 @@ from sqlalchemy.orm import Session
 
 from app.core.security import get_password_hash, verify_password
 from app.crud.base import CRUDBase
+from app.crud.crud_clubMember import clubMember
 from app.models.club import Club
 from app.schemas.club import ClubCreate, ClubUpdate
 
 from app.crud.crud_clubRole import clubRole
 from app.schemas.clubRole import ClubRoleCreate
+from app.schemas.clubMember import ClubMemberCreate
 
+import datetime
 
 class CRUDClub(CRUDBase[Club, ClubCreate, ClubUpdate]):
     
@@ -35,7 +38,9 @@ class CRUDClub(CRUDBase[Club, ClubCreate, ClubUpdate]):
             update_data = obj_in.dict(exclude_unset=True)
         return super().update(db, db_obj=db_obj, obj_in=update_data)
     
-    # def addUser(self, db: Session, *, )
+    def addUser(self, db: Session, *, clubID: int, userId: int):
+        newMember = ClubMemberCreate(user = userId, club = clubID, role = 0, joined = datetime.datetime.now())
+        clubMember.create(db, obj_in = newMember)
 
 
 

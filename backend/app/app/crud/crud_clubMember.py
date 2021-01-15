@@ -7,16 +7,23 @@ from app.crud.base import CRUDBase
 from app.models.club import ClubMember
 from app.schemas.clubMember import ClubMemberCreate, ClubMemberUpdate
 
-
+import datetime
 
 class CRUDClubMember(CRUDBase[ClubMember, ClubMemberCreate, ClubMemberUpdate]):
     
     def create(self, db: Session, *, obj_in: ClubMemberCreate) -> ClubMember:
         db_obj = ClubMember(
-            clubName = obj_in.clubName
+            club = obj_in.club,
+            user = obj_in.user,
+            role = 0,
+            joined = datetime.datetime.now()
         )
+        print(f"club member: {db_obj}")
+        print(db_obj.id)
         db.add(db_obj)
+        print(db_obj.id)
         db.commit()
+        print(db_obj.id)
         db.refresh(db_obj)
         return db_obj
 
@@ -30,4 +37,4 @@ class CRUDClubMember(CRUDBase[ClubMember, ClubMemberCreate, ClubMemberUpdate]):
         return super().update(db, db_obj=db_obj, obj_in=update_data)
 
 
-ClubMember = CRUDClubMember(ClubMember)
+clubMember = CRUDClubMember(ClubMember)
