@@ -31,6 +31,27 @@ class CRUDClubRole(CRUDBase[ClubRole, ClubRoleCreate, ClubRoleUpdate]):
         db.refresh(db_obj)
         return db_obj
 
+    def createOwner(self, db: Session, *, obj_in: ClubRoleCreate) -> ClubRole:
+        db_obj = ClubRole(
+            title = obj_in.title,
+            club = obj_in.clubID, 
+            color = "BB4411",
+            canDeleteForum = True,
+            canMuteUser = True,
+            canBanUser = True,
+            canKickUser = True,
+            canAddEvents = True,
+            canAnnounce = True,
+            canDeleteClub = True,
+            canChangeImages = True,
+            roleRank = 50
+        )
+        db.add(db_obj)
+        db.commit()
+        db.refresh(db_obj)
+        return db_obj
+
+
     def update(
         self, db: Session, *, db_obj: ClubRole, obj_in: Union[ClubRoleUpdate, Dict[str, Any]]
     ) -> ClubRole:

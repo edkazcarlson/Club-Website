@@ -7,7 +7,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     pass
 
-class CalendarEvents(Base):
+class CalendarEvent(Base):
     __tablename__ = 'calendarEvent'
     id = Column(Integer, primary_key=True, index=True)
     club = Column(Integer, ForeignKey('club.id'))

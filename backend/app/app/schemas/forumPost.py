@@ -7,7 +7,7 @@ from pydantic import BaseModel, EmailStr
 class ForumPostBase(BaseModel):
     channel: int
     writer: int
-    timeStamp: datetime
+    timeStamp: datetime.datetime
     beenEdited: bool
 
 # Properties to receive via API on creation
