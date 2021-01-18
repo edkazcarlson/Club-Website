@@ -7,16 +7,10 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     pass
 
-class Forum(Base):
-    __tablename__ = 'forum'
-    id = Column(Integer, primary_key=True, index=True)
-    club = Column(Integer, ForeignKey('club.id'))
-
-
 class ForumFolder(Base):
     __tablename__ = 'forumFolder'
     id = Column(Integer, primary_key=True, index=True)
-    forum = Column(Integer, ForeignKey('forum.id'))
+    club = Column(Integer, ForeignKey('club.id'))
     folderName = Column(String)
     folderOrder = Column(Integer)
 
