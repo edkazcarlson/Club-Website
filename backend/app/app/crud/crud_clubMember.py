@@ -6,16 +6,20 @@ from app.core.security import get_password_hash, verify_password
 from app.crud.base import CRUDBase
 from app.models.club import ClubMember
 from app.schemas.clubMember import ClubMemberCreate, ClubMemberUpdate
+from app import crud
 
 import datetime
 
 class CRUDClubMember(CRUDBase[ClubMember, ClubMemberCreate, ClubMemberUpdate]):
     
     def create(self, db: Session, *, obj_in: ClubMemberCreate) -> ClubMember:
+        rank = crud.club.getDefaultRole(db = db, clubID = obj_in.club)
+        if rank == 'Could not find a role':
+            return rank
         db_obj = ClubMember(
             club = obj_in.club,
             user = obj_in.user,
-            role = 0,
+            role = rank.id,
             joined = datetime.datetime.now()
         )
         print(f"club member: {db_obj}")

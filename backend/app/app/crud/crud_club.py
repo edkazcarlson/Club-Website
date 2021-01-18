@@ -1,16 +1,20 @@
 from typing import Any, Dict, Optional, Union
 
 from sqlalchemy.orm import Session
+from sqlalchemy import join
+
 
 from app.core.security import get_password_hash, verify_password
 from app.crud.base import CRUDBase
 from app.crud.crud_clubMember import clubMember
-from app.models.club import Club
+from app.models.club import Club, ClubRole
 from app.schemas.club import ClubCreate, ClubUpdate
 
 from app.crud.crud_clubRole import clubRole
 from app.schemas.clubRole import ClubRoleCreate
 from app.schemas.clubMember import ClubMemberCreate
+
+from sqlalchemy import desc
 
 import datetime
 
@@ -42,6 +46,12 @@ class CRUDClub(CRUDBase[Club, ClubCreate, ClubUpdate]):
         newMember = ClubMemberCreate(user = userId, club = clubID, role = 0, joined = datetime.datetime.now())
         clubMember.create(db, obj_in = newMember)
 
-
+    def getDefaultRole(self, db: Session, *, clubID: int):
+        thisClubID = self.get(db, clubID).id
+        j = db.query(ClubRole).filter(ClubRole.club == clubID).order_by(desc(ClubRole.roleRank)).limit(1)
+        print('join here')
+        for row in j:
+            return row
+        return 'Could not find a role'
 
 club = CRUDClub(Club)

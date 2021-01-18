@@ -181,6 +181,6 @@ def userJoinClub(
     club = crud.club.get(db, id = clubID)
     if club != None:
         obj_in = ClubMemberCreate(club = clubID, user = currentUser.id)
-        crud.clubMember.create(db, obj_in = obj_in)
+        return crud.clubMember.create(db, obj_in = obj_in)
     else: 
         return "Club not found"
