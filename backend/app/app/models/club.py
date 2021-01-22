@@ -32,6 +32,8 @@ class ClubRole(Base):
     canAnnounce = Column(Boolean)
     canDeleteClub = Column(Boolean)
     canChangeImages = Column(Boolean)
+    canManageFunds = Column(Boolean)
+    canDecideAds = Column(Boolean)
     roleRank = Column(Integer)
 
 class ClubMember(Base):

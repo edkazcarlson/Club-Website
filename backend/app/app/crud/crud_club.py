@@ -34,10 +34,10 @@ class CRUDClub(CRUDBase[Club, ClubCreate, ClubUpdate]):
         db.refresh(db_objSchema)
 
         defaultRoleSchema = ClubRoleCreate(title = 'Deafult', clubID = db_objSchema.id)
-        defaultRole = clubRole.createDefault(db = db, obj_in = defaultRoleSchema)
+        defaultRole = clubRole.create(db = db, obj_in = defaultRoleSchema)
 
         OwnerRoleSchema = ClubRoleCreate(title = 'Owner', clubID = db_objSchema.id)
-        OwnerRole = clubRole.create(db = db, obj_in = OwnerRoleSchema)
+        OwnerRole = clubRole.createOwner(db = db, obj_in = OwnerRoleSchema)
 
         defaultForumSchema = ForumFolderCreate(club = db_objSchema.id, folderName = 'General', folderOrder = 0)
         defaultForum = forumFolder.create(db = db, obj_in = defaultForumSchema)
@@ -67,5 +67,6 @@ class CRUDClub(CRUDBase[Club, ClubCreate, ClubUpdate]):
         for row in j:
             return row
         return 'Could not find a role'
+        
 
 club = CRUDClub(Club)

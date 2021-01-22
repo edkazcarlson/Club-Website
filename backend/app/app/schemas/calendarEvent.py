@@ -5,18 +5,21 @@ from pydantic import BaseModel, EmailStr
 
 # Shared properties
 class CalendarEventBase(BaseModel):
-    CalendarEvent: int
+    club: int
     title: str
     description: str
     startTime: datetime.datetime
     endTime: datetime.datetime
-
+    announcer: int
 
 
 
 # Properties to receive via API on creation
-class CalendarEventCreate(CalendarEventBase):
-    pass
+class CalendarEventCreate(BaseModel):
+    title: str
+    description: str
+    startTime: datetime.datetime
+    endTime: datetime.datetime
 
 # Properties to receive via API on update
 class CalendarEventUpdate(CalendarEventBase):

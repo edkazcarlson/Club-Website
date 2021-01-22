@@ -7,3 +7,4 @@ from .clubRole import ClubRole, ClubRoleCreate, ClubRolenDB, ClubRoleUpdate
 from .forumChannel import ForumChannel, ForumChannelCreate, ForumChannelInDB, ForumChannelUpdate
 from .forumFolder import ForumFolder, ForumFolderCreate, ForumFolderInDB, ForumFolderUpdate
 from .forumPost import ForumPost, ForumPostCreate, ForumPostInDB, ForumPostUpdate
+from .calendarEvent import CalendarEvent, CalendarEventCreate, CalendarEventInDB, CalendarEventUpdate

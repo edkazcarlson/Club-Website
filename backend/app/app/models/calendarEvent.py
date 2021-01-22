@@ -15,6 +15,7 @@ class CalendarEvent(Base):
     description = Column(String)
     startTime = Column(Date)
     endTime = Column(Date)
+    announcer = Column(Integer, ForeignKey('clubMember.id'))
 
 
 
