@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
+import Calendar from '../../_components/Calendar'
 import { userActions } from '../../_actions';
 
 function HomePage() {
@@ -19,7 +19,7 @@ function HomePage() {
     return (
         <div className="col-lg-8 offset-lg-2">
             <h1>Hi !</h1>
-            
+            <Calendar></Calendar>
         </div>
     );
 }
