@@ -10,12 +10,17 @@ if TYPE_CHECKING:
 class CalendarEvent(Base):
     __tablename__ = 'calendarEvent'
     id = Column(Integer, primary_key=True, index=True)
+    announcer = Column(Integer, ForeignKey('clubMember.id'))
     club = Column(Integer, ForeignKey('club.id'))
     title = Column(String)
     description = Column(String)
     startTime = Column(Date)
     endTime = Column(Date)
-    announcer = Column(Integer, ForeignKey('clubMember.id'))
+    # location = 
+    recurring = Column(str) #Can be either 'Daily', 'Weekly', 'Monthly', 'Yearly'
+    isNegativeEvent = Column(Boolean) #to do a 1 time removal of a recurring event
+    isAllDay = Column(Boolean)
+    
 
 
 

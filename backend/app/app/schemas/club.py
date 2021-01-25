@@ -24,6 +24,7 @@ class ClubUpdate(ClubBase):
     clubIcon: Optional[str] = None
     clubLat: Optional[float] = None
     clubLong: Optional[float] = None
+    clubColor: Optional[str] = None
 
 
 class ClubInDBBase(ClubBase):

@@ -17,6 +17,7 @@ class Club(Base):
     clubDescription = Column(String)
     clubLat = Column(Float)
     clubLong = Column(Float)
+    clubColor = Column(String)
 
 class ClubRole(Base):
     __tablename__ = 'clubRole'

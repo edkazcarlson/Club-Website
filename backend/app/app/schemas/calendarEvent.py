@@ -11,7 +11,9 @@ class CalendarEventBase(BaseModel):
     startTime: datetime.datetime
     endTime: datetime.datetime
     announcer: int
-
+    recurring: str #Can be either 'Daily', 'Weekly', 'Monthly', 'Yearly'
+    isNegativeEvent: bool #to do a 1 time removal of a recurring event
+    isAllDay: bool
 
 
 # Properties to receive via API on creation
