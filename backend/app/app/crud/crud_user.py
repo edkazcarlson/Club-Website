@@ -20,13 +20,9 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             is_superuser=obj_in.is_superuser,
             pfp_Path = 'Default.bmp'
         )
-        print(f'User: {db_obj}')
-        print(db_obj.id)
         db.add(db_obj)
-        print(db_obj.id)
         db.commit()
         db.refresh(db_obj)
-        print(db_obj.id)
         return db_obj
 
     def update(

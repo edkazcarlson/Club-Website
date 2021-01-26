@@ -23,20 +23,14 @@ class CRUDClubMember(CRUDBase[ClubMember, ClubMemberCreate, ClubMemberUpdate]):
             role = rank.id,
             joined = datetime.datetime.now()
         )
-        print(f"club member: {db_obj}")
-        print(db_obj.id)
         db.add(db_obj)
-        print(db_obj.id)
         db.commit()
-        print(db_obj.id)
         db.refresh(db_obj)
         return db_obj
 
     def getMemberFromUser(self, db: Session, *, userID: int, clubID: int):
-        print('in clubmember crud')
         q = db.query(ClubMember).filter(ClubMember.club == clubID and ClubMember.user == userID).limit(1)
         for row in q:
-            print(row)
             return row
         return None
 

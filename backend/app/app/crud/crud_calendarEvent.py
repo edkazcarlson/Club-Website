@@ -16,12 +16,13 @@ class CRUDCalendarEvent(CRUDBase[CalendarEvent, CalendarEventCreate, CalendarEve
             description = obj_in.description,
             startTime = obj_in.startTime,
             endTime = obj_in.endTime,
-            announcer = announcer
+            announcer = announcer,
+            recurring = obj_in.recurring,
+            isNegativeEvent = obj_in.isNegativeEvent,
+            isAllDay = obj_in.isAllDay
         )
-        print('pre add in calendar crud')
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
-        print('pre return in calendar crud')
         return db_obj
 calendarEvent = CRUDCalendarEvent(CalendarEvent)

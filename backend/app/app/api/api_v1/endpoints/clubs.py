@@ -53,13 +53,10 @@ def create_event(
     """
     Create new event for a club.
     """
-    print('line 56 clubs api')
     club = crud.club.get(db = db, id = clubID)
-    print(f"club: {club}")
     if club != None:
         member = crud.clubMember.getMemberFromUser(db = db, userID = currentUser.id, clubID = club.id)
         if member != None:
-            print('line 62 in clubs')
             if crud.clubMember.canAnnounce(db = db, memberID = member.id):
                 newEvent = crud.calendarEvent.create(db, obj_in = calendarIn, announcer =  member.id, club = club.id)
             else:

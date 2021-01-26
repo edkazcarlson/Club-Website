@@ -3,6 +3,7 @@ import logging
 from tenacity import after_log, before_log, retry, stop_after_attempt, wait_fixed
 
 from app.db.session import SessionLocal
+from app.core.config import settings
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -18,6 +19,8 @@ wait_seconds = 1
     after=after_log(logger, logging.WARN),
 )
 def init() -> None:
+    logger.error(f'{settings.SQLALCHEMY_DATABASE_URI}')
+    logger.error('hello c pre start')
     try:
         # Try to create session to check if DB is awake
         db = SessionLocal()

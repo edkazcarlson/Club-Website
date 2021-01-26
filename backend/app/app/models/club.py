@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING
 
 from sqlalchemy import Boolean, Column, Integer, String, Float, ForeignKey, Date
 from sqlalchemy.orm import relationship
+from geoalchemy2 import Geography
 
 from app.db.base_class import Base
 
@@ -15,8 +16,7 @@ class Club(Base):
     clubName = Column(String)
     clubIcon = Column(String)
     clubDescription = Column(String)
-    clubLat = Column(Float)
-    clubLong = Column(Float)
+    clubLocation = Column(Geography(geometry_type='POINT', srid=4326))
     clubColor = Column(String)
 
 class ClubRole(Base):

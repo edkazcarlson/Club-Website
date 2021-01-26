@@ -63,7 +63,6 @@ class CRUDClub(CRUDBase[Club, ClubCreate, ClubUpdate]):
     def getDefaultRole(self, db: Session, *, clubID: int):
         thisClubID = self.get(db, clubID).id
         j = db.query(ClubRole).filter(ClubRole.club == clubID).order_by(desc(ClubRole.roleRank)).limit(1)
-        print('join here')
         for row in j:
             return row
         return 'Could not find a role'

@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING
 from sqlalchemy import Table, Boolean, Column, Integer, String, Float, ForeignKey, Date
 from sqlalchemy.orm import relationship
 from app.db.base_class import Base
+from geoalchemy2 import Geography
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -16,8 +17,8 @@ class CalendarEvent(Base):
     description = Column(String)
     startTime = Column(Date)
     endTime = Column(Date)
-    # location = 
-    recurring = Column(str) #Can be either 'Daily', 'Weekly', 'Monthly', 'Yearly'
+    location = Column(Geography(geometry_type='POINT', srid=4326))
+    recurring = Column(String) #Can be either 'Daily', 'Weekly', 'Monthly', 'Yearly'
     isNegativeEvent = Column(Boolean) #to do a 1 time removal of a recurring event
     isAllDay = Column(Boolean)
     

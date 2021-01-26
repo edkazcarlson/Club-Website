@@ -163,9 +163,7 @@ def userProfilePicture(
     Sends the profile picture to the user
     """
     user = crud.user.get(db, id=user_id)
-    print(f"user: {user}")
     imagePath = user.pfp_Path
-    print(f'os.path.join("userPFP",imagePath): {os.path.join("userPFP",imagePath)}')
     return FileResponse(os.path.join('userPFP',imagePath), media_type='application/octet-stream',filename=imagePath)
 
 @router.post("/joinClub-{clubID}")
@@ -177,7 +175,6 @@ def userJoinClub(
     """
     Join a club
     """
-    print(currentUser.email)
     club = crud.club.get(db, id = clubID)
     if club != None:
         obj_in = ClubMemberCreate(club = clubID, user = currentUser.id)
