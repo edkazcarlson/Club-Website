@@ -35,6 +35,10 @@ function RegisterPage() {
     }
     console.log(`user.keys: ${Object.keys(user)}`)
     const forms = Object.keys(user).map(function(x, idx) {
+        console.log('in map')
+        console.log(submitted)
+        console.log(x)
+        console.log(user.x)
         return ( <div className="form-group" key = {x}>
         <label>{prettyFields[idx]}</label>
         <input type="text" name={x} value={user.x} onChange={handleChange} className={'form-control' + (submitted && !user.x ? ' is-invalid' : '')} />

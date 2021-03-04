@@ -42,7 +42,7 @@ function App() {
                     <PersonalInfoPage/>
                 </PrivateRoute>
                 <Route path="/login" component={LoginPage} />
-                <Route path="/register" component={RegisterPage} />
+                {/* <Route path="/register" component={RegisterPage} /> */}
                 {/* <Redirect from="*" to="/" /> */}
             </Router>
         </div>

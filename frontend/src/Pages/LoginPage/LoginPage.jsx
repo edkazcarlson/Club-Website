@@ -1,68 +1,80 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 
 import { userActions } from '../../_actions';
+import { Container, Paper, Typography} from '@material-ui/core';
+import TextField from '@material-ui/core/TextField'
+import LoginEntryField from './LoginEntryField'
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+      '& > *': {
+        margin: theme.spacing(1),
+        width: '25ch',
+      },
+    },
+  }));
+
+
 
 function LoginPage() {
-    const [inputs, setInputs] = useState({
-        email: '',
-        password: ''
-    });
-    const [submitted, setSubmitted] = useState(false);
-    const { email, password } = inputs;
-    const loggingIn = useSelector(state => state.authentication.loggingIn);
+    let [loginState, setLoginState] = React.useState(true);
+    let [userEmail, setUserEmail] = React.useState('');
+    let [userName, setUserName] = React.useState('');
+    let [userPass, setUserPass] = React.useState('');
+    let setters = {'Username': setUserName, 'Password': setUserPass, 'Email': setUserEmail}
     const dispatch = useDispatch();
-    const location = useLocation();
 
-    // reset login status
-    useEffect(() => { 
-        dispatch(userActions.logout()); 
-    }, []);
-
-    function handleChange(e) {
-        const { name, value } = e.target;
-        setInputs(inputs => ({ ...inputs, [name]: value }));
+    function changeUser(newVal, modelKey){
+        const setter = setters[modelKey];
+        setter(newVal);
     }
 
-    function handleSubmit(e) {
-        e.preventDefault();
+    let form = null;
+    const classes = useStyles();
+    if (loginState){
+        form = [<LoginEntryField label = 'Username' changeUser = {changeUser} modelKey = 'Username'/>,
+        <LoginEntryField label = 'Password' changeUser = {changeUser} modelKey = 'Password'/>]
+    } else {
+        form = [<LoginEntryField label = 'Username' changeUser = {changeUser} modelKey = 'Username'/>,
+        <LoginEntryField label = 'Email' changeUser = {changeUser} modelKey = 'Email'/>,
+        <LoginEntryField label = 'Password' changeUser = {changeUser} modelKey = 'Password'/>,
+        <LoginEntryField label = 'Verify Password' 
+        modelKey = '' currentPassword = {userPass} verification = {true}/>]
+    }
+    
+    function submitData(){
+        if (loginState){
 
-        setSubmitted(true);
-        if (email && password) {
-            // get return url from location state or default to home page
-            const { from } = location.state || { from: { pathname: "/" } };
-            dispatch(userActions.login(email, password, from));
+        } else {
+
         }
     }
 
     return (
-        <div className="col-lg-8 offset-lg-2">
-            <h2>Login</h2>
-            <form name="form" onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Email</label>
-                    <input type="text" name="email" value={email} onChange={handleChange} className={'form-control' + (submitted && !email ? ' is-invalid' : '')} />
-                    {submitted && !email &&
-                        <div className="invalid-feedback">Email is required</div>
-                    }
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" name="password" value={password} onChange={handleChange} className={'form-control' + (submitted && !password ? ' is-invalid' : '')} />
-                    {submitted && !password &&
-                        <div className="invalid-feedback">Password is required</div>
-                    }
-                </div>
-                <div className="form-group">
-                    <button className="btn btn-primary">
-                        {loggingIn && <span className="spinner-border spinner-border-sm mr-1"></span>}
+        <div style = {{backgroundColor: 'red', height: '100%', width: '100%'}}>
+            <div 
+            style = {{backgroundColor: '#F0FFFF', alignItems: 'center', borderRadius: '25px', maxWidth: '500px',  maxHeight: '600px', margin: '50px auto'}}>
+                <div style = {{display: 'flex', justifyContent: 'space-around'}}>
+                    <Typography variant = 'h3' onClick = {() => setLoginState(true)} style = {loginState ? {opacity: '1'} : {opacity: '0.5'}}>
                         Login
-                    </button>
-                    <Link to="/register" className="btn btn-link">Register</Link>
+                    </Typography>
+                    <Typography variant = 'h3' onClick = {() => setLoginState(false)} style = {loginState ? {opacity: '0.5'} : {opacity: '1'}}>
+                        Register
+                    </Typography>
                 </div>
-            </form>
+                <form noValidate autoComplete="off"
+                 style = {{display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+                    {form}
+                </form>
+                <Button onClick = {submitData}>
+                    Submit
+                </Button>
+            </div>
         </div>
+
     );
 }
 
